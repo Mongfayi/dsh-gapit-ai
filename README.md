@@ -1,101 +1,66 @@
-# GAPIT AI for DeepSeek Harness
+# 面向 DeepSeek Harness 的 GAPIT AI 技能
 
-A DSH plugin bundle that publishes the **GAPIT AI** skill: a GAPIT 4.1 expert for
-GWAS and genomic selection in R. The skill covers model choice, parameter
-semantics, error triage, result interpretation, and runnable R pipelines.
+本仓库把 **GAPIT AI** 技能打包成 DeepSeek Harness（DSH）插件 bundle：一个面向 R 的 GAPIT 4.1 专家，覆盖 GWAS 与基因组选择（GS）的模型选择、参数语义、报错排查、结果解读，并能生成可直接运行的 R 分析流程。
 
-## Install in DeepSeek Harness
+## 在 DeepSeek Harness 中安装
 
-Clone the repository, then install the checkout as a bundle:
+克隆仓库，然后把该目录作为 bundle 安装：
 
 ```bash
 git clone https://github.com/Mongfayi/dsh-gapit-ai.git
 ```
 
-In DSH, open the Plugin Manager, choose to install a bundle from a local
-directory, and point it at the cloned `dsh-gapit-ai` folder (the one containing
-`package.json`). The bundle appears as **GAPIT AI** and adds the `gapit-ai`
-skill.
+打开 DSH 的插件管理，选择"从本地目录安装 bundle"，指向克隆下来的 `dsh-gapit-ai` 文件夹（包含 `package.json` 的那一层）。安装后插件列表中会显示 **GAPIT AI**，技能目录中新增 `gapit-ai`。
 
-> If this skill was previously installed as a plain folder under
-> `~/.dsh/skills/gapit-ai` (or `project/.dsh/skills/gapit-ai`), delete that copy
-> first. Filesystem-provider skills sit in a nearer registry layer and shadow the
-> plugin's copy regardless of rank.
+> 如果此前把该技能以普通文件夹形式装在 `~/.dsh/skills/gapit-ai`（或项目内 `.dsh/skills/gapit-ai`），请先删除那份副本：文件系统 provider 位于更近的注册层，会盖住插件提供的同名技能，rank 高低不起作用。
 
-## What it adds
+## 提供什么
 
-- One skill, `gapit-ai`, in the skill catalog (model- and user-invocable,
-  loaded on demand).
-- The full payload lives beside the plugin: `SKILL.md` as the entry point,
-  `references/` for progressive disclosure, and `resources/` with the bundled
-  GAPIT function library (21,143 lines), two R templates, and a 304-entry
-  real-world question bank.
+- 技能目录中的一个 `gapit-ai` 技能（模型可调用，也可由用户主动调用，按需加载）。
+- 技能内容全部随插件分发：`SKILL.md` 是入口，`references/` 按需渐进读取，`resources/` 内置 GAPIT 函数库（21,143 行）、两个 R 模板，以及 304 条真实问题题库。
 
-Nothing runs when the skill is not invoked. The bundle registers no tools and
-does not touch user files.
+不调用技能时不会执行任何代码；bundle 不注册工具，也不改动用户文件。
 
-## Requirements
+## 环境要求
 
-R 4.x with the GAPIT runtime dependencies (`ape`, `bigmemory`, `EMMREML`,
-`genetics`, `gplots`, `htmltools`, `magrittr`, `lme4`, `MASS`, `multtest`,
-`plotly`, `RcppArmadillo`, `scatterplot3d`, `snowfall`). The skill's
-`references/troubleshooting.md` covers installation; optional packages are
-`BGLR`, `rrBLUP`, and `data.table`.
+R 4.x 及 GAPIT 运行依赖：`ape`、`bigmemory`、`EMMREML`、`genetics`、`gplots`、`htmltools`、`magrittr`、`lme4`、`MASS`、`multtest`、`plotly`、`RcppArmadillo`、`scatterplot3d`、`snowfall`。安装与排错见技能的 `references/troubleshooting.md`；可选包为 `BGLR`、`rrBLUP`、`data.table`。
 
-## Layout
+## 目录结构
 
 ```
-package.json          bundle manifest (dsh.bundle.patch)
-cordis.patch.yml      inserts the Host row `gapit-ai`
-index.js              skill provider: lists/loads skills/gapit-ai/SKILL.md
-locale/{en,zh}.json   Plugin Manager title and description
-icon.svg              Manhattan-plot mark
-skills/gapit-ai/      SKILL.md + references/ + resources/  (the skill payload)
+package.json          bundle 清单（dsh.bundle.patch）
+cordis.patch.yml      插入 Host 行 `gapit-ai`
+index.js              skill provider：列出/加载 skills/gapit-ai/SKILL.md
+locale/{en,zh}.json   插件管理中的标题与说明
+icon.svg              Manhattan 峰图标
+skills/gapit-ai/      SKILL.md + references/ + resources/（技能本体）
 ```
 
-## Using the skill
+## 使用技能
 
-Ask for GWAS or GS work in any session (for example "run BLINK GWAS on these
-files" or "explain GAGBLUP parameters"). The agent discovers the skill from its
-description and calls the `skill` tool, which renders the entry point and the
-plugin package's `skills/gapit-ai` directory as the skill's **Base directory**.
+在任意会话中直接提出 GWAS / GS 需求（例如"对这些文件跑 BLINK GWAS"或"解释 GAGBLUP 的参数"）。Agent 会根据描述发现技能并调用 `skill` 工具，加载入口文件，并把插件包内的 `skills/gapit-ai` 作为技能的 **Base directory**。
 
-The R templates do not guess that path. Before running one, set
-`SKILL_DIR`/`skill_dir` to the Base directory reported by the loader, or export
-`GAPIT_SKILL_DIR` in the shell, for example:
+R 模板不会猜测该路径。运行前把模板里的 `skill_dir` 设为加载器报告的 Base directory，或在 shell 中导出 `GAPIT_SKILL_DIR`：
 
 ```bash
 export GAPIT_SKILL_DIR="$PWD/skills/gapit-ai"
 Rscript my_gwas.R
 ```
 
-## Updating
+## 更新与卸载
 
-The skill body is read from disk on each load, so editing `skills/gapit-ai/`
-takes effect without reinstalling. Reinstall the bundle only when
-`package.json`, `cordis.patch.yml`, `index.js`, locales, or the icon change.
+技能正文每次加载时从磁盘读取，修改 `skills/gapit-ai/` 无需重装；只有 `package.json`、`cordis.patch.yml`、`index.js`、locale 或图标变化时才需要重新安装 bundle。
 
-Uninstalling the bundle removes the skill from the catalog; the payload stays on
-disk because it is part of this linked package directory.
+卸载 bundle 后技能会从目录中消失；技能文件仍留在磁盘上，因为它们属于这个（链接安装的）包目录。
 
-## License
+## 许可证
 
-This project is licensed under the **GNU General Public License v3.0**
-(`GPL-3.0-only`). See [LICENSE](LICENSE).
+本项目以 **GNU General Public License v3.0**（`GPL-3.0-only`）发布，参见 [LICENSE](LICENSE)。
 
-It is a derivative of [GAPIT-AI](https://github.com/jiabowang/GAPIT-AI)
-(GPL-3.0), which bundles the
-[GAPIT](https://github.com/jiabowang/GAPIT) function library (GPL >= 2).
-Copyright holders, the exact upstream material used, and the modifications made
-for DSH are recorded in [NOTICE](NOTICE). If you redistribute this work or a
-modified version, you must keep the GPL-3.0 terms, the copyright notices, and a
-statement of your changes.
+它是 [GAPIT-AI](https://github.com/jiabowang/GAPIT-AI)（GPL-3.0）的衍生作品；GAPIT-AI 内置的 [GAPIT](https://github.com/jiabowang/GAPIT) 函数库为 GPL (>= 2)。版权归属、使用的上游材料以及为 DSH 所做的修改均记录在 [NOTICE](NOTICE) 中。再分发本作品或修改版时，必须保留 GPL-3.0 条款、版权声明，并说明你的修改。
 
-## Citation
+## 引用
 
-If GAPIT contributes to published work, the upstream project asks you to cite:
+如果 GAPIT 对发表工作有帮助，上游项目请求引用：
 
-Wang J., Zhang Z. **GAPIT Version 4: Integration of GWAS into Genomic
-Prediction.** *Molecular Biology and Evolution*, 2026, msag107.
-<https://doi.org/10.1093/molbev/msag107>
-
+Wang J., Zhang Z. **GAPIT Version 4: Integration of GWAS into Genomic Prediction.** *Molecular Biology and Evolution*, 2026, msag107. <https://doi.org/10.1093/molbev/msag107>
