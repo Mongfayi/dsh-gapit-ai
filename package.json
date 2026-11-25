@@ -1,6 +1,6 @@
 {
   "name": "@local/dsh-gapit-ai",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "type": "module",
   "description": "GAPIT AI skill for DeepSeek Harness: GWAS and genomic-selection expert with a bundled GAPIT 4.1 library, R templates, and a real-world question bank.",
@@ -38,6 +38,9 @@
     "locale/*.json",
     "icon.svg",
     "README.md",
+    "LICENSE",
+    "NOTICE",
+    "CHANGELOG.md",
     "skills"
   ]
 }

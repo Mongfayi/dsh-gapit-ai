@@ -4,13 +4,15 @@
 
 ## 在 DeepSeek Harness 中安装
 
-克隆仓库，然后把该目录作为 bundle 安装：
+打开 DSH 的 **插件** 页面，点右上角 **添加插件**，把仓库地址粘贴进去：
 
-```bash
-git clone https://github.com/Mongfayi/dsh-gapit-ai.git
+```
+https://github.com/Mongfayi/dsh-gapit-ai
 ```
 
-打开 DSH 的插件管理，选择"从本地目录安装 bundle"，指向克隆下来的 `dsh-gapit-ai` 文件夹（包含 `package.json` 的那一层）。安装后插件列表中会显示 **GAPIT AI**，技能目录中新增 `gapit-ai`。
+再点 **安装**。DSH 会把仓库作为 git 依赖安装到当前 profile，完成后插件列表中出现 **GAPIT AI**，技能目录中新增 `gapit-ai`。
+
+也可以把仓库克隆到本地，在同一对话框里填本地目录路径（包含 `package.json` 的那一层）安装；这种方式是链接安装，适合边改边试。
 
 > 如果此前把该技能以普通文件夹形式装在 `~/.dsh/skills/gapit-ai`（或项目内 `.dsh/skills/gapit-ai`），请先删除那份副本：文件系统 provider 位于更近的注册层，会盖住插件提供的同名技能，rank 高低不起作用。
 
@@ -49,9 +51,11 @@ Rscript my_gwas.R
 
 ## 更新与卸载
 
-技能正文每次加载时从磁盘读取，修改 `skills/gapit-ai/` 无需重装；只有 `package.json`、`cordis.patch.yml`、`index.js`、locale 或图标变化时才需要重新安装 bundle。
+从 GitHub 安装的是某个提交的快照，仓库更新后需要重新安装才会生效：在插件管理中卸载 **GAPIT AI**，再按上面的步骤添加一次。
 
-卸载 bundle 后技能会从目录中消失；技能文件仍留在磁盘上，因为它们属于这个（链接安装的）包目录。
+如果是本地目录（链接）安装，修改 `skills/gapit-ai/` 后新开会话就会生效；只有 `package.json`、`cordis.patch.yml`、`index.js`、locale 或图标变化时才需要重新安装 bundle。
+
+卸载 bundle 后技能会从目录中消失；链接安装的技能文件仍留在磁盘上。
 
 ## 许可证
 

@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.1 — 2026-11-25
+
+- README rewritten in Chinese, with the official DeepSeek Harness install flow
+  (插件 → 添加插件 → GitHub 仓库地址).
+- Ship `NOTICE`, `LICENSE`, and `CHANGELOG.md` inside installed copies so the
+  GPL-3.0 distribution keeps its notices.
+
 ## 1.0.0 — 2026-11-25
 
 - First public release: the GAPIT AI skill packaged as a DSH plugin bundle
