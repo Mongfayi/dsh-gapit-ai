@@ -1,5 +1,5 @@
 # 面向 DeepSeek Harness 的 GAPIT AI 技能
-
+我一天用完了trae的赠送积分，遂转向dsh
 本仓库把 **GAPIT AI** 技能打包成 DeepSeek Harness（DSH）插件 bundle：一个面向 R 的 GAPIT 4.1 专家，覆盖 GWAS 与基因组选择（GS）的模型选择、参数语义、报错排查、结果解读，并能生成可直接运行的 R 分析流程。
 
 ## 在 DeepSeek Harness 中安装
