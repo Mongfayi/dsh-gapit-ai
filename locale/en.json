@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "GAPIT AI",
+    "description": "Adds the GAPIT 4.1 expert skill for GWAS and genomic selection: model choice, parameter semantics, error triage, a bundled GAPIT function library, R templates, and a real-world question bank. The skill is listed in the skill catalog and loads on demand; nothing runs until the agent invokes it, and R must be installed for analysis."
+  }
+}

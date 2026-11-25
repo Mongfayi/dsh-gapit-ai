@@ -1,0 +1,4 @@
+- insert:
+    - id: gapit-ai
+      name: '@local/dsh-gapit-ai'
+      config: {}

@@ -1,0 +1,43 @@
+{
+  "name": "@local/dsh-gapit-ai",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "GAPIT AI skill for DeepSeek Harness: GWAS and genomic-selection expert with a bundled GAPIT 4.1 library, R templates, and a real-world question bank.",
+  "license": "GPL-3.0-only",
+  "author": "Mongfayi",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Mongfayi/dsh-gapit-ai.git"
+  },
+  "homepage": "https://github.com/Mongfayi/dsh-gapit-ai",
+  "bugs": {
+    "url": "https://github.com/Mongfayi/dsh-gapit-ai/issues"
+  },
+  "keywords": [
+    "dsh-plugin",
+    "deepseek-harness",
+    "gapit",
+    "gwas",
+    "genomic-selection",
+    "skill"
+  ],
+  "exports": {
+    ".": "./index.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "files": [
+    "index.js",
+    "cordis.patch.yml",
+    "locale/*.json",
+    "icon.svg",
+    "README.md",
+    "skills"
+  ]
+}

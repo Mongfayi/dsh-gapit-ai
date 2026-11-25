@@ -1,0 +1,62 @@
+NOTICE
+======
+
+This repository packages the GAPIT AI skill as a DeepSeek Harness (DSH) plugin
+bundle. It is a derivative work. The original copyright notices and licenses of
+the upstream projects apply to the material listed below.
+
+1. GAPIT AI (skill instructions, references, R templates, question bank)
+-----------------------------------------------------------------------
+Copyright (C) 2026 Jiabo Wang and GAPIT-AI contributors
+Source:  https://github.com/jiabowang/GAPIT-AI
+Version: v1.0-beta.1.4 (released 2026-10-29)
+License: GNU General Public License v3.0 (GPL-3.0), see LICENSE
+
+Used material:
+  - the skill instructions (upstream .claude/skills/gapit-ai/SKILL.md and
+    .trae/skills/GAPIT-AI/SKILL.md), reorganized into
+    skills/gapit-ai/SKILL.md and skills/gapit-ai/references/;
+  - the GWAS and GS R templates in skills/gapit-ai/resources/code/templates/;
+  - the public question bank in
+    skills/gapit-ai/resources/question-bank/question_bank_public.jsonl.
+
+Modifications for DSH, made 2026-11-25:
+  - repackaged as a DSH plugin bundle (index.js registers a skill provider;
+    cordis.patch.yml inserts the bundle row);
+  - the single large SKILL.md was split into an entry point plus references/
+    for progressive disclosure;
+  - TRAE/Claude specific invocation rules, "主理人模式", billing, feedback-data
+    mandates and platform directory layouts were removed;
+  - file paths were rewritten to the skill's runtime Base directory and the
+    GAPIT_SKILL_DIR environment variable;
+  - upstream v1.2 and v1.4 hard rules were merged into
+    references/hard-rules.md, and the v1.4 function summary into
+    references/function-summary.md;
+  - templates were adapted to resolve the bundled library from the Base
+    directory.
+
+2. GAPIT (bundled function library)
+-----------------------------------
+Copyright (C) Jiabo Wang and GAPIT contributors
+Source:  https://github.com/jiabowang/GAPIT
+Version: GAPIT 4.1 (GAPIT.Version = "2026.5.19, GAPIT 4.1")
+License: GPL (>= 2), as declared in GAPIT's DESCRIPTION file
+
+Used material:
+  - skills/gapit-ai/resources/code/gapit_functions.txt (21,143 lines), the
+    GAPIT function library exactly as shipped in GAPIT-AI v1.0-beta.1.4
+    (upstream v1.4 cleanup: trailing test script removed, GAPIT.MAS stub
+    removed, GAPIT.MAF/GAPIT.Main/GAPIT.Power fixes).
+
+Modifications in this repository: none. The file is redistributed verbatim
+inside this GPL-3.0 work, which is permitted by GPL (>= 2).
+
+3. Original work in this repository
+-----------------------------------
+Copyright (C) 2026 Mongfayi
+License: GNU General Public License v3.0 (GPL-3.0), see LICENSE
+
+  - index.js, cordis.patch.yml, locale/*.json, icon.svg, README.md, NOTICE.
+
+Every part of this repository is distributed under GPL-3.0 only. There is no
+warranty, to the extent permitted by law.
